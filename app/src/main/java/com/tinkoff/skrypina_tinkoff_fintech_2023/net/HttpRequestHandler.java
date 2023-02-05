@@ -10,18 +10,27 @@ import java.net.URL;
 public class HttpRequestHandler {
 
     static final String TOP_100_FILMS_URL = "https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_100_POPULAR_FILMS";
+    static final String FILM_INFO_URL = "https://kinopoiskapiunofficial.tech/api/v2.2/films";
     static final String HEADER_KEY_NAME = "X-API-KEY";
     static final String HEADER_KEY_VALUE = "e30ffed0-76ab-4dd6-b41f-4c9da2b2735b";
     static final String HEADER_ACCEPT_KEY = "accept";
     static final String HEADER_ACCEPT_VALUE = "application/json";
 
     public String getTop100FilmsJSON() {
+        return getJSONFromServer(TOP_100_FILMS_URL);
+    }
+
+    public String getFilmDataByIdJSON(String id) {
+        return getJSONFromServer(FILM_INFO_URL + "/" + id);
+    }
+
+    private String getJSONFromServer(String address) {
         URL url;
         try {
-            url = new URL(TOP_100_FILMS_URL);
+            url = new URL(address);
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            throw new RuntimeException("URL " + TOP_100_FILMS_URL + "is malformed.\n");
+            throw new RuntimeException("URL " + address + "is malformed.\n");
         }
 
         HttpURLConnection conn;
@@ -29,7 +38,7 @@ public class HttpRequestHandler {
             conn = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Couldn't open connection to " + TOP_100_FILMS_URL);
+            throw new RuntimeException("Couldn't open connection to " + address);
         }
 
         // Set headers
