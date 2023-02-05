@@ -1,16 +1,16 @@
 package com.tinkoff.skrypina_tinkoff_fintech_2023.model;
 
 public class FilmContentItem {
-    public FilmContentItem(String filmId, String posterImageURL, String movieName, String year, String genre) {
-        this.posterImageURL = posterImageURL;
+    public FilmContentItem(String filmId, String posterImageURLPreview, String movieName, String year, String genre) {
+        this.posterImageURLPreview = posterImageURLPreview;
         this.movieName = movieName;
         this.year = year;
         this.genre = genre;
         this.filmId = filmId;
     }
 
-    public String getPosterImageURL() {
-        return posterImageURL;
+    public String getPosterImageURLPreview() {
+        return posterImageURLPreview;
     }
 
     public String getMovieName() {
@@ -30,7 +30,7 @@ public class FilmContentItem {
     }
 
     private final String filmId;
-    private final String posterImageURL;
+    private final String posterImageURLPreview;
     private final String movieName;
     private final String year;
     private final String genre;

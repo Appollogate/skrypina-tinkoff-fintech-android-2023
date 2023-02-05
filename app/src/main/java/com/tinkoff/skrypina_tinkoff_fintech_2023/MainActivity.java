@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
-            // Background work - retrieving the data from Kinopoisk servers
+            // Background work - retrieving top-100 film data from Kinopoisk servers
             List<FilmContentItem> dataset = new FilmPreviewCardDataSource().loadMoviePreviewCards();
             // UI Thread work
             handler.post(() -> {
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     //Toast.makeText(this, previewCard.getFilmId(), Toast.LENGTH_SHORT).show();
                     // TODO: get movie id and switch activity
                     Intent intent = new Intent(getBaseContext(), FilmActivity.class);
+                    intent.putExtra("FILM_ID", previewCard.getFilmId());
                     startActivity(intent);
                 }));
                 recyclerView.setHasFixedSize(true);

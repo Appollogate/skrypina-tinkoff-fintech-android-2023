@@ -78,7 +78,7 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ListIt
         FilmContentItem item = dataset.get(position);
         holder.nameTextView.setText(item.getMovieName());
         holder.genreYearTextView.setText(String.format("%s (%s)", item.getGenre(), item.getYear()));
-        loadPicture(holder, item.getPosterImageURL());
+        loadPicture(holder, item.getPosterImageURLPreview());
     }
 
     private void loadPicture(ListItemViewHolder holder, String url) {
