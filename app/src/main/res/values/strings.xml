@@ -3,4 +3,6 @@
     <string name="genresKeyword">Жанры:</string>
     <string name="countriesKeyword">Страны:</string>
     <string name="PosterContentDescription">A movie poster.</string>
+    <string name="networkErrorMessage">Произошла ошибка при загрузке данных,\nпроверьте подключение к сети</string>
+    <string name="retryPrompt">Повторить</string>
 </resources>

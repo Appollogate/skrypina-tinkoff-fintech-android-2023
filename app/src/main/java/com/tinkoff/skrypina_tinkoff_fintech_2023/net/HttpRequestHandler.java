@@ -61,6 +61,7 @@ public class HttpRequestHandler {
         }
         catch (IOException e) {
             e.printStackTrace();
+            // TODO: handle
             throw new RuntimeException("Couldn't read response from server.\n");
         }
     }
