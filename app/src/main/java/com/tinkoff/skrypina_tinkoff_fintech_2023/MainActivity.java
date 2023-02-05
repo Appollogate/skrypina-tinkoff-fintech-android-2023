@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.Toast;
 
 import com.tinkoff.skrypina_tinkoff_fintech_2023.adapter.ListItemAdapter;
 import com.tinkoff.skrypina_tinkoff_fintech_2023.data.MoviePreviewCardDataSource;
-import com.tinkoff.skrypina_tinkoff_fintech_2023.model.MoviePreviewCard;
+import com.tinkoff.skrypina_tinkoff_fintech_2023.model.MovieContentItem;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -27,11 +28,14 @@ public class MainActivity extends AppCompatActivity {
 
         executor.execute(() -> {
             // Background work - retrieving the data from Kinopoisk servers
-            List<MoviePreviewCard> dataset = new MoviePreviewCardDataSource().loadMoviePreviewCards();
+            List<MovieContentItem> dataset = new MoviePreviewCardDataSource().loadMoviePreviewCards();
             // UI Thread work
             handler.post(() -> {
                 RecyclerView recyclerView = findViewById(R.id.recycler_view);
-                recyclerView.setAdapter(new ListItemAdapter(dataset));
+                // Set list item data + onItemClick listener
+                recyclerView.setAdapter(new ListItemAdapter(dataset, previewCard -> {
+                    Toast.makeText(this, previewCard.getMovieName(), Toast.LENGTH_SHORT).show(); // TODO: get movie id and switch activity
+                }));
                 recyclerView.setHasFixedSize(true);
             });
         });

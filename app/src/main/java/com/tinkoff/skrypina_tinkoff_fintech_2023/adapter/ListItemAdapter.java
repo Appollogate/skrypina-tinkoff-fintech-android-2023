@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.tinkoff.skrypina_tinkoff_fintech_2023.R;
-import com.tinkoff.skrypina_tinkoff_fintech_2023.model.MoviePreviewCard;
+import com.tinkoff.skrypina_tinkoff_fintech_2023.model.MovieContentItem;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -23,36 +25,57 @@ import java.util.concurrent.Executors;
 
 public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ListItemViewHolder> {
 
-    public ListItemAdapter(List<MoviePreviewCard> dataset) {
-        this.dataset = dataset;
+    public interface OnItemClickListener {
+        void onItemClick(MovieContentItem previewCard);
     }
 
     static class ListItemViewHolder extends RecyclerView.ViewHolder {
+        private final TextView nameTextView;
+        private final TextView genreYearTextView;
+        private final ImageView posterView;
+
+        //private final View itemView;
 
         public ListItemViewHolder(View itemView) {
             super(itemView);
+            //this.itemView = itemView;
             nameTextView = itemView.findViewById(R.id.movieName);
             genreYearTextView = itemView.findViewById(R.id.movieGenreAndYear);
             posterView = itemView.findViewById(R.id.moviePreviewPoster);
         }
 
-        private final TextView nameTextView;
-        private final TextView genreYearTextView;
+//        public void bind(final MovieContentItem item, final OnItemClickListener listener) {
+//            itemView.setOnClickListener(view -> listener.onItemClick(item));
+//        }
+    }
 
-        private final ImageView posterView;
+    private final List<MovieContentItem> dataset;
+    private final OnItemClickListener listener;
+
+    public ListItemAdapter(List<MovieContentItem> dataset, OnItemClickListener listener) {
+        this.dataset = dataset;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public ListItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View adapterLayout = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item, parent, false);
-        return new ListItemViewHolder(adapterLayout);
+        ListItemViewHolder viewHolder = new ListItemViewHolder(view);
+
+        view.setOnClickListener(v -> {
+            final int position = viewHolder.getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(dataset.get(position));
+            }
+        });
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListItemViewHolder holder, int position) {
-        MoviePreviewCard item = dataset.get(position);
+        MovieContentItem item = dataset.get(position);
         holder.nameTextView.setText(item.getMovieName());
         holder.genreYearTextView.setText(String.format("%s (%s)", item.getGenre(), item.getYear()));
         loadPicture(holder, item.getPosterImageURL());
@@ -65,13 +88,10 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ListIt
         executor.execute(() -> {
             try {
                 Bitmap image = BitmapFactory.decodeStream(new URL(url).openStream());
-                handler.post(() -> {
-                   holder.posterView.setImageBitmap(image);
-                });
+                handler.post(() -> holder.posterView.setImageBitmap(image));
             } catch (MalformedURLException e) {
                 System.err.println("Malformed URL");
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 System.err.println("An I/O exception occurred");
             }
         });
@@ -81,6 +101,4 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ListIt
     public int getItemCount() {
         return dataset.size();
     }
-
-    private final List<MoviePreviewCard> dataset;
 }

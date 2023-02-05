@@ -1,7 +1,7 @@
 package com.tinkoff.skrypina_tinkoff_fintech_2023.model;
 
-public class MoviePreviewCard {
-    public MoviePreviewCard(String posterImageURL, String movieName, String year, String genre) {
+public class MovieContentItem {
+    public MovieContentItem(String posterImageURL, String movieName, String year, String genre) {
         this.posterImageURL = posterImageURL;
         this.movieName = movieName;
         this.year = year;
