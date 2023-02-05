@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tinkoff.skrypina_tinkoff_fintech_2023.R;
-import com.tinkoff.skrypina_tinkoff_fintech_2023.model.MovieContentItem;
+import com.tinkoff.skrypina_tinkoff_fintech_2023.model.FilmContentItem;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -26,7 +26,7 @@ import java.util.concurrent.Executors;
 public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ListItemViewHolder> {
 
     public interface OnItemClickListener {
-        void onItemClick(MovieContentItem previewCard);
+        void onItemClick(FilmContentItem previewCard);
     }
 
     static class ListItemViewHolder extends RecyclerView.ViewHolder {
@@ -49,10 +49,10 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ListIt
 //        }
     }
 
-    private final List<MovieContentItem> dataset;
+    private final List<FilmContentItem> dataset;
     private final OnItemClickListener listener;
 
-    public ListItemAdapter(List<MovieContentItem> dataset, OnItemClickListener listener) {
+    public ListItemAdapter(List<FilmContentItem> dataset, OnItemClickListener listener) {
         this.dataset = dataset;
         this.listener = listener;
     }
@@ -75,7 +75,7 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ListIt
 
     @Override
     public void onBindViewHolder(@NonNull ListItemViewHolder holder, int position) {
-        MovieContentItem item = dataset.get(position);
+        FilmContentItem item = dataset.get(position);
         holder.nameTextView.setText(item.getMovieName());
         holder.genreYearTextView.setText(String.format("%s (%s)", item.getGenre(), item.getYear()));
         loadPicture(holder, item.getPosterImageURL());
