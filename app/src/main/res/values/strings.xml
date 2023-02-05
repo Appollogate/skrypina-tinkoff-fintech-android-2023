@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Skrypina_Tinkoff_Fintech_2023</string>
+    <string name="genresKeyword">Жанры:</string>
+    <string name="countriesKeyword">Страны:</string>
 </resources>

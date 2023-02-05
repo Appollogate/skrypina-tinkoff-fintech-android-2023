@@ -3,6 +3,7 @@ package com.tinkoff.skrypina_tinkoff_fintech_2023;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -34,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
                 RecyclerView recyclerView = findViewById(R.id.recycler_view);
                 // Set list item data + onItemClick listener
                 recyclerView.setAdapter(new ListItemAdapter(dataset, previewCard -> {
-                    Toast.makeText(this, previewCard.getFilmId(), Toast.LENGTH_SHORT).show(); // TODO: get movie id and switch activity
+                    //Toast.makeText(this, previewCard.getFilmId(), Toast.LENGTH_SHORT).show();
+                    // TODO: get movie id and switch activity
+                    Intent intent = new Intent(getBaseContext(), FilmActivity.class);
+                    startActivity(intent);
                 }));
                 recyclerView.setHasFixedSize(true);
             });
